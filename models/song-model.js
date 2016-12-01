@@ -3,6 +3,7 @@ const sequelizeConnection = require('../db');
 
 // Models:
 const Artist = require('./artist-model');
+const Genre = require('./genre-model');
 
 //////////
 // YOUR CODE HERE:
