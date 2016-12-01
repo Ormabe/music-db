@@ -1,16 +1,18 @@
 const Sequelize = require('sequelize');
+const sequelize = CONFIG.database;
 const sequelizeConnection = require('../db');
 
 // Models:
 const Playlist = require('../models/playlist-model');
 
 // Password Encryption (via: https://nodeontrain.xyz/tuts/secure_password/)
+// http://docs.sequelizejs.com/en/latest/docs/migrations/
 const bcrypt = require('bcrypt');
 
 var User = sequelizeConnection.define('user', {
 	userId: {
 		type: Sequelize.UUID,
-		defaultValue: DataTypes.UUIDV4
+		defaultValue: Sequelize.UUIDV4
 	},
 	username: {
 		type: Sequelize.STRING;
@@ -59,6 +61,23 @@ var User = sequelizeConnection.define('user', {
 	}
 });
 
+const hasSecurePassword = function (user, options, callback) {
+	if (user.password != user.password_confirmation) {
+		throw new Error("Password confirmation does not match Password")
+	}
+	bcrypt.hash(user.get('password'), 10, functino (err, hash) {
+		if (err) return callback(err);
+		user.set('password_digest', hash);
+		return callback(null, options);
+	});
+};
 
+User.beforeCreate(function(user, options, callback) {
+	user.email = user.email.toLowerCase();
+	if (user.password)
+		hasSecurePassword(user, options, callback);
+	else
+		return callback(null, options);
+})
 
 module.exports = User;
