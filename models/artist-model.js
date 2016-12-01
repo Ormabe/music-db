@@ -5,4 +5,14 @@ const sequelizeConnection = require('../db');
 // YOUR CODE HERE:
 //////////
 
+var Artist = sequelizeConnection.define('artist', {
+	name: {
+		type: Sequelize.STRING,
+		validate: {
+			max: 100,
+			notNull: true
+		}
+	}
+});
+
 module.exports = Artist;
