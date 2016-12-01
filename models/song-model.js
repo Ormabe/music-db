@@ -31,5 +31,4 @@ Song.belongsTo(Artist);
 Song.belongsToMany(Genre, {through: 'song_genre'});
 Genre.belongsToMany(Song, {through: 'song_genre'});
 
-
 module.exports = Song;

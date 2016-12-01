@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelizeConnection = require('../db');
 
-//models
+// Models: 
 const Song = require('./song-model');
 
 //////////
@@ -17,6 +17,5 @@ const Genre = sequelizeConnection.define('genre', {
 		}
 	}
 });
-
 
 module.exports = Genre;

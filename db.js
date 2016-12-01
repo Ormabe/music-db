@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 //be sure to edit to change 'natemaddrey' to your specific username
 //'music-api' is the name of the database
 
-// const sequelizeConnection = new Sequelize('postgres://Rabiya@localhost:5432/music-db');
-const sequelizeConnection = new Sequelize('postgres://gabrielbarriga@localhost:5432/music-db');
+const sequelizeConnection = new Sequelize('postgres://Rabiya@localhost:5432/music-db');
+// const sequelizeConnection = new Sequelize('postgres://gabrielbarriga@localhost:5432/music-db');
 
 //Test to see if the connection worked
 sequelizeConnection
