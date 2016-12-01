@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelizeConnection = require('../db');
 
-//models
+// Models: 
 const Song = require('./song-model');
 
 //////////
