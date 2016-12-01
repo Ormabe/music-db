@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize');
 const sequelizeConnection = require('../db');
 
+//models:
+const Song = require('song-model');
+
 //////////
 // YOUR CODE HERE:
 //////////
@@ -13,6 +16,7 @@ var Playlist = sequelizeConnection.define('playlist', {
 		}
 	}
 });
+
 
 
 module.exports = Playlist;
