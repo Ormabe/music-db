@@ -10,10 +10,10 @@ const bcrypt = require('bcrypt');
 var User = sequelizeConnection.define('user', {
 	userId: {
 		type: Sequelize.UUID,
-		defaultValue: DataTypes.UUIDV4
+		defaultValue: Sequelize.UUIDV4
 	},
 	username: {
-		type: Sequelize.STRING;
+		type: Sequelize.STRING,
 		validate: {
 			notEmpty: true,
 			min: 6,

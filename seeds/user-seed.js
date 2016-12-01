@@ -9,6 +9,7 @@ User.sync({ force: true })
 
 .then( (data) => User.create(
 	{username: "iLuvTrap1998", email: "twerkingturkey@gmail.com", password: "i##love##country"}
+	)
 )
 
 .then( (user) => {
