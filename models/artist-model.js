@@ -5,7 +5,7 @@ const sequelizeConnection = require('../db');
 // YOUR CODE HERE:
 //////////
 
-var Artist = sequelizeConnection.define('artist', {
+const Artist = sequelizeConnection.define('artist', {
 	name: {
 		type: Sequelize.STRING,
 		validate: {
