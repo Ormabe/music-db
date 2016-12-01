@@ -9,7 +9,6 @@ var Playlist = sequelizeConnection.define('playlist', {
 		type: Sequelize.STRING,
 		validate: {
 			max: 100,
-			notNull: true,
 			notEmpty: true
 		}
 	}

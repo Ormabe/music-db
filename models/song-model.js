@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelizeConnection = require('../db');
 
-//models
+// Models:
 const Artist = require('./artist-model');
 
 //////////
@@ -25,7 +25,7 @@ const Song = sequelizeConnection.define('song', {
 			notEmpty: true,
 			isUrl: true 
 		}
-	},
+	}
 })
 
 Song.belongsTo(Artist);
