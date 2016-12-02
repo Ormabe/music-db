@@ -4,7 +4,7 @@ const sequelizeConnection = require('../db');
 // Models:
 const Artist = require('./artist-model');
 const Genre = require('./genre-model');
-const Album = require('./album-model');
+//const Album = require('./album-model');
 
 //////////
 // YOUR CODE HERE:
@@ -29,8 +29,8 @@ const Song = sequelizeConnection.define('song', {
 })
 
 Song.belongsTo(Artist);
-Song.belongsTo(Album);
-Album.belongsTo(Many, {through: 'album_song'});
+// Song.belongsTo(Album);
+// Album.belongsToMany(Song, {through: 'album_song'});
 Song.belongsToMany(Genre, {through: 'song_genre'});
 Genre.belongsToMany(Song, {through: 'song_genre'});
 

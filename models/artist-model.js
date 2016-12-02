@@ -10,7 +10,6 @@ const Artist = sequelizeConnection.define('artist', {
 		type: Sequelize.STRING,
 		validate: {
 			max: 100,
-			notNull: true,
 			notEmpty: true
 		}
 	}

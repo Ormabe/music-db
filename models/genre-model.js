@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelizeConnection = require('../db');
 
-// Models: 
-const Song = require('./song-model');
 
 //////////
 // YOUR CODE HERE:

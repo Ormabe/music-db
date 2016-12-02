@@ -12,21 +12,21 @@ Album.sync({ force: true })
 	)
 )
 .then( (album) => {
-	album.addSong(1)
+	album.addSong([1]);
 })
-.then( (data) => Album.create(
+.then( () => Album.create(
 	{title: "My Friends Never Die"}
 	)
 )
 .then( (album) => {
-	album.addSong(2)
+	album.addSong([2]);
 })
-.then( (data) => Album.create(
+.then( () => Album.create(
 	{title: "Illmatic"}
 	)
 )
 .then( (album) => {
-	album.addSong(3)
+	album.addSong([3]);
 })
 
 .catch( (err) => console.log(err))
