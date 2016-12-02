@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = CONFIG.database;
 const sequelizeConnection = require('../db');
+const path = require('path');
 
 // Models:
 const Playlist = require('../models/playlist-model');
