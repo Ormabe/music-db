@@ -16,7 +16,7 @@ var User = sequelizeConnection.define('user', {
 		defaultValue: Sequelize.UUIDV4
 	},
 	username: {
-		type: Sequelize.STRING;
+		type: Sequelize.STRING,
 		validate: {
 			notEmpty: true,
 			min: 6,

@@ -1,19 +1,16 @@
 const Sequelize = require('sequelize');
 const sequelizeConnection = require('../db');
 
-
-//////////
-// YOUR CODE HERE:
-//////////
-
-const Genre = sequelizeConnection.define('genre', {
+const Album = sequelizeConnection.define('album', {
 	title: {
 		type: Sequelize.STRING,
 		validate: {
+			min: 1,
 			max: 100,
 			notEmpty: true
 		}
 	}
 });
 
-module.exports = Genre;
+
+module.exports = Album;
