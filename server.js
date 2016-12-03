@@ -14,65 +14,60 @@ const Artist = require('./models/artist-model');
 const Genre = require('./models/genre-model');
 const Playlist = require('./models/playlist-model');
 
-// body-parser middleware adds .body property to req (if we make a POST AJAX request with some data attached, that data will be accessible as req.body)
+// BODY PARSER MIDDLEWARE ADDS '.body' PROPERTY TO 'req'
+// USED TO ACCESS DATA IN POST REQUESTS
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-
-
-// app.listen('9999', () => console.log('Listening on port 9999'));
-
-
-// ============================================
+// ================================================
 // MIDDLEWARE TO USE FOR ALL REQUESTS:
 var myLogger = (req, res, next) => {
 	console.log('Something very exciting is happening');
 	next();
 };
 
-// Testing the route to make sure that everything is working:
+// TEST THE ROUTE TO ENSURE IT IS WORKING:
 router.get('/', function (req, res) {
 	res.json({message: 'WOOHOO! We got a router y\'all!'});
 })
 
-// ============================================
-// ON ROUTES THAT END IN '/artists', as follows:
+// ================================================
+// ON ROUTES THAT END IN '/artists', AS BELOW:
 
 router.route('/artists')
 
-	// GET all artists, ordered a-z
+	// GET ALL ARTISTS, ORDERED BY A-Z:
 	.get((req, res) => {
 		Artist.findAll({
 			order: [['name', 'ASC']]
 		})
 		.then((artists) => {
-			res.send(artists);
+			res.send(artists)
 		})
 		.catch((err) => {
-			console.log(err);
+			console.log(err)
 		})
 	})
 
-	// POST a new artist
+	// POST A NEW ARTIST:
 	.post((req, res) => {
 		Artist.create({
 			name: req.body.name
 		})
 		.then((artist) => {
-			res.json(artist);
+			res.json(artist)
 		})
 		.catch((err) => {
-			console.log(err);
+			console.log(err)
 		})
-	})
+	});
 
-// ============================================
-// ON ROUTES THAT END IN '/artists/:id', as follows:
+// ================================================
+// ON ROUTES THAT END IN '/artists/:id', AS BELOW:
 
-router.route('/api/artists/:id')
+router.route('/artists/:id')
 
-	// GET a specific artist by id
+	// DELETE ONE (1) ARTIST BY ID:
 	.get((req, res) => {
 		Artist.findById(req.params.id)
 		.then( (artist) => {
@@ -81,15 +76,60 @@ router.route('/api/artists/:id')
 		.catch( (err) => {
 			console.log(err);
 		})
-	});
+	})
 
-// ===================================
+	// DELETE ONE (1) ARTIST BY ID:
+	.delete((req, res) => {
+		Artist.findById(req.params.id) 
+		.then(function(artist) {
+			artist.destroy()
+		})
+		.then((data) => {
+			console.log('Deleted!')
+			res.send(data)
+		})
+		.catch((err) => {
+			res.send(err)
+		})
+	})
+
+// ================================================
+// ON ROUTES THAT END IN '/artists/:id:newName', AS BELOW:
+
+router.route('/artists/:id/:newName')
+	.put((req, res) => {
+		Artist.findById(req.params.id)
+		.then((artist) => {
+			// BELOW VERSION IS RECOMMENDED BY EXPRESS, BUT DOES NOT WORK:
+			// artist.update({name: req.params}) 
+
+			// BELOW VERSION SUCCESSFULLY UPDATES ARTIST RECORD BASED ON URL:
+			artist.update({name: req.param('newName')})
+		})
+		.then((data) => {
+			console.log('Updated Artist\'s Name!')
+			res.send(data)
+		})
+		.catch((err) => {
+			res.send(err)
+		})
+	})
+
+// ================================================
+// ON ROUTES THAT END IN '/songs', AS BELOW:
+
+router.route('/songs')
+	.get((req, res) => {
+
+	})
+// ================================================
 // STARTING THE SERVER:
 
 app.listen(9999, () => console.log('Listening on Port 9999'));
 
-// ===================================
+// ================================================
 // REGISTER OUR ROUTES:
 // (All the routes are prefixed with /api)
+
 app.use(myLogger)
 app.use('/api', router);
