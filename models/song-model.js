@@ -21,7 +21,7 @@ const Song = sequelizeConnection.define('song', {
 	youtube_url: {
 		type: Sequelize.STRING,
 		validate: {
-			max: 50,
+			max: 100,
 			notEmpty: true,
 			isUrl: true 
 		}
@@ -29,9 +29,13 @@ const Song = sequelizeConnection.define('song', {
 })
 
 Song.belongsTo(Artist);
+
 // Song.belongsTo(Album);
 // Album.belongsToMany(Song, {through: 'album_song'});
 Song.belongsToMany(Genre, {through: 'song_genre'});
 Genre.belongsToMany(Song, {through: 'song_genre'});
+
+Song.belongsToMany(Artist, {through: 'artists_songs'});
+Artist.belongsToMany(Song, {through: 'artists_songs'});
 
 module.exports = Song;

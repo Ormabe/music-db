@@ -13,6 +13,7 @@ const sequelizeConnection = require('./db');
 const Artist = require('./models/artist-model');
 const Genre = require('./models/genre-model');
 const Playlist = require('./models/playlist-model');
+const Song = require('./models/song-model');
 
 // BODY PARSER MIDDLEWARE ADDS '.body' PROPERTY TO 'req'
 // USED TO ACCESS DATA IN POST REQUESTS
@@ -120,6 +121,18 @@ router.route('/artists/:id/:newName')
 
 router.route('/songs')
 	.get((req, res) => {
+		Song.findAll({
+			order: [['title', 'ASC']],
+			include: [Artist],
+			include: [Genre]
+		})
+		.then((songs) => {
+			console.log('Listing all the songs')
+			res.send(songs)
+		})
+		.catch((err) => {
+			console.log(err)
+		})
 
 	})
 // ================================================

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelizeConnection = require('../db');
+const Artist = require('../models/artist-model');
 const Song = require('../models/song-model');
 const Genre = require('../models/genre-model');
 // const SongGenre = require('./models/song-genre-model');
