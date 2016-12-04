@@ -1,36 +1,36 @@
-'use strict';
+// REQUIRE IN MODELS:
+const Album = require('./models/album-model');
+const Artist = require('./models/artist-model');
+const Genre = require('./models/genre-model');
+const Playlist = require('./models/playlist-model');
+const Song = require('./models/song-model');
+const User = require('./models/user-model');
 
-var fs        = require('fs');
-var path      = require('path');
-var Sequelize = require('sequelize');
-var basename  = path.basename(module.filename);
-var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json')[env];
-var db        = {};
+// REQUIRE IN ROUTES:
+const albums = require('./routes/album-router');
+const artists = require('./routes/artist-router');
+const genres = require('./routes/genre-router');
+const playlists = require('./routes/playlist-router');
+const songs = require('./routes/song-router');
+const users = require('./routes/user-router');
 
-if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
-} else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+// EXPORT AS AN OBJECT:
+module.exports = {
+  models: {
+    Album: Album,
+    Artist: Artist,
+    Genre: Genre,
+    Playlist: Playlist,
+    Song: Song,
+    User: User
+  },
+  routes: {
+    albums: albums,
+    artists: artists,
+    genres: genres,
+    playlists: playlists,
+    songs: songs,
+    users: users
+  }
 }
 
-fs
-  .readdirSync(__dirname)
-  .filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(function(file) {
-    var model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(function(modelName) {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-module.exports = db;

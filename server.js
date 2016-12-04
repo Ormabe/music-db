@@ -33,112 +33,15 @@ router.get('/', function (req, res) {
 })
 
 // ================================================
-// ON ROUTES THAT END IN '/artists', AS BELOW:
-
-router.route('/artists')
-
-	// GET ALL ARTISTS, ORDERED BY A-Z:
-	.get((req, res) => {
-		Artist.findAll({
-			order: [['name', 'ASC']]
-		})
-		.then((artists) => {
-			res.send(artists)
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-	})
-
-	// POST A NEW ARTIST:
-	.post((req, res) => {
-		Artist.create({
-			name: req.body.name
-		})
-		.then((artist) => {
-			res.json(artist)
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-	});
-
-// ================================================
-// ON ROUTES THAT END IN '/artists/:id', AS BELOW:
-
-router.route('/artists/:id')
-
-	// DELETE ONE (1) ARTIST BY ID:
-	.get((req, res) => {
-		Artist.findById(req.params.id)
-		.then( (artist) => {
-			res.send(artist);
-		})
-		.catch( (err) => {
-			console.log(err);
-		})
-	})
-
-	// DELETE ONE (1) ARTIST BY ID:
-	.delete((req, res) => {
-		Artist.findById(req.params.id) 
-		.then(function(artist) {
-			artist.destroy()
-		})
-		.then((data) => {
-			console.log('Deleted!')
-			res.send(data)
-		})
-		.catch((err) => {
-			res.send(err)
-		})
-	})
-
-// ================================================
-// ON ROUTES THAT END IN '/artists/:id:newName', AS BELOW:
-
-router.route('/artists/:id/:newName')
-	.put((req, res) => {
-		Artist.findById(req.params.id)
-		.then((artist) => {
-			// BELOW VERSION IS RECOMMENDED BY EXPRESS, BUT DOES NOT WORK:
-			// artist.update({name: req.params}) 
-
-			// BELOW VERSION SUCCESSFULLY UPDATES ARTIST RECORD BASED ON URL:
-			artist.update({name: req.param('newName')})
-		})
-		.then((data) => {
-			console.log('Updated Artist\'s Name!')
-			res.send(data)
-		})
-		.catch((err) => {
-			res.send(err)
-		})
-	})
-
-// ================================================
-// ON ROUTES THAT END IN '/songs', AS BELOW:
-
-router.route('/songs')
-	.get((req, res) => {
-		Song.findAll({
-			order: [['title', 'ASC']],
-			include: [Artist],
-			include: [Genre.l]
-		})
-		.then((songs) => {
-			console.log('Listing all the songs')
-			res.send(songs)
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-
-	})
-// ================================================
 // STARTING THE SERVER:
 
 app.listen(9999, () => console.log('Listening on Port 9999'));
+
+// ================================================
+// ACCESS THE OBJECT ON 'index.js':
+
+const models = require('./index').models;
+const routes = require('./index').routes;
 
 // ================================================
 // REGISTER OUR ROUTES:
@@ -146,3 +49,9 @@ app.listen(9999, () => console.log('Listening on Port 9999'));
 
 app.use(myLogger)
 app.use('/api', router);
+app.use('/api/album', router.albums);
+app.use('/api/artists', router.artists);
+app.use('/api/genres', router.genres);
+app.use('/api/playlists', router.playlists);
+app.use('/api/songs', router.songs);
+app.use('/api/users', router.users);
