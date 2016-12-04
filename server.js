@@ -124,7 +124,7 @@ router.route('/songs')
 		Song.findAll({
 			order: [['title', 'ASC']],
 			include: [Artist],
-			include: [Genre]
+			include: [Genre.l]
 		})
 		.then((songs) => {
 			console.log('Listing all the songs')
