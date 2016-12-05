@@ -20,6 +20,9 @@ const Song = require('./models/song-model');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// THIS SERVES UP THE BUNDLE FILE TO BE ACCESSED BY THE FRONT END:
+app.use(express.static(path.join(__dirname, '/front/bundle')));
+
 // ================================================
 // MIDDLEWARE TO USE FOR ALL REQUESTS:
 var myLogger = (req, res, next) => {
@@ -49,9 +52,16 @@ const routes = require('./index').routes;
 
 app.use(myLogger)
 app.use('/api', router);
-app.use('/api/album', router.albums);
+app.use('/api/albums', router.albums);
 app.use('/api/artists', router.artists);
 app.use('/api/genres', router.genres);
 app.use('/api/playlists', router.playlists);
 app.use('/api/songs', router.songs);
 app.use('/api/users', router.users);
+
+// IF WHAT WE TYPE ISN'T IN THE API ROUTE - WE WANT TO SEND BACK OUR REACT APP:
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/front/index.html'));
+});
+// NOTES:
+// http://kerryritter.com/getting-started-with-sequelize-postgres-and-express/
