@@ -5,13 +5,15 @@ const express = require('express');
 const router = express.Router();
 
 // REQUIRE IN MODELS:
+const Artist = require('../models/artist-model');
+const Genre = require('../models/genre-model');
 const Song = require('../models/song-model');
 
 
 // ================================================
 // ON ROUTES THAT END IN '/songs', AS BELOW:
 
-router.route('/songs')
+router.route('/')
 	.get((req, res) => {
 		Song.findAll({
 			order: [['title', 'ASC']],
@@ -25,6 +27,10 @@ router.route('/songs')
 		.catch((err) => {
 			console.log(err)
 		})
+
+	})
+
+	.post((req, res) => {
 
 	})
 

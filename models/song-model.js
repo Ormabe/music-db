@@ -30,8 +30,7 @@ const Song = sequelizeConnection.define('song', {
 
 Song.belongsTo(Artist);
 
-// Song.belongsTo(Album);
-// Album.belongsToMany(Song, {through: 'album_song'});
+// THIS {through: 'string'} WILL AUTOMATICALLY CREATE THIS TABLE:
 Song.belongsToMany(Genre, {through: 'song_genre'});
 Genre.belongsToMany(Song, {through: 'song_genre'});
 

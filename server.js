@@ -2,7 +2,7 @@ const express = require('express');
 // ROUTES FOR OUR API:
 // This is an instance of the express router
 const router = express.Router();
-const mysql = require('mysql');
+// const mysql = require('mysql');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -10,18 +10,35 @@ const Sequelize = require('sequelize');
 const sequelizeConnection = require('./db');
 
 // REQUIRE IN ALL MODELS:
+const Album = require('./models/album-model')
 const Artist = require('./models/artist-model');
 const Genre = require('./models/genre-model');
 const Playlist = require('./models/playlist-model');
 const Song = require('./models/song-model');
+const User = require('./models/user-model');
+
+// REQUIRE IN ROUTE FOLDER:
+const routes = require('./routes/index').routes;
+
+// // REQUIRE IN THE ROUTES:
+// const albums = routes.albums;
+// const artists = routes.artists;
+// const genres = routes.genres;
+// const songs = routes.songs;
+// const playlists = routes.playlists;
+// const users = routes.users;
+
+// ================================================
+// SETTING THE SERVER:
+app.set('port', 9999)
+
+// THIS SERVES UP THE BUNDLE FILE TO BE ACCESSED BY THE FRONT END:
+app.use(express.static(path.join(__dirname, '/front/bundle')));
 
 // BODY PARSER MIDDLEWARE ADDS '.body' PROPERTY TO 'req'
 // USED TO ACCESS DATA IN POST REQUESTS
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// THIS SERVES UP THE BUNDLE FILE TO BE ACCESSED BY THE FRONT END:
-app.use(express.static(path.join(__dirname, '/front/bundle')));
 
 // ================================================
 // MIDDLEWARE TO USE FOR ALL REQUESTS:
@@ -31,37 +48,39 @@ var myLogger = (req, res, next) => {
 };
 
 // TEST THE ROUTE TO ENSURE IT IS WORKING:
-router.get('/', function (req, res) {
-	res.json({message: 'WOOHOO! We got a router y\'all!'});
+app.get('/', function (req, res, next) {
+	res.send({message: "WOOHOO! We got a router you all!"});
+	next();
 })
+
+// return router;
 
 // ================================================
 // STARTING THE SERVER:
 
-app.listen(9999, () => console.log('Listening on Port 9999'));
-
-// ================================================
-// ACCESS THE OBJECT ON 'index.js':
-
-const models = require('./index').models;
-const routes = require('./index').routes;
+app.listen(app.get('port'), () => console.log('Listening on Port 9999'));
 
 // ================================================
 // REGISTER OUR ROUTES:
 // (All the routes are prefixed with /api)
 
+// app.get("/api/artists", (req, res) => {
+// 	res.send("your route is correct")
+// })
+
 app.use(myLogger)
-app.use('/api', router);
-app.use('/api/albums', router.albums);
-app.use('/api/artists', router.artists);
-app.use('/api/genres', router.genres);
-app.use('/api/playlists', router.playlists);
-app.use('/api/songs', router.songs);
-app.use('/api/users', router.users);
+// app.use('/api/albums', routes.albums);
+app.use('/api/artists', routes.artists);
+// app.use('/api/genres', routes.genres);
+// app.use('/api/playlists', routes.playlists);
+// app.use('/api/songs', routes.songs);
+// app.use('/api/users', routes.users);
+// app.use('/', routes);
 
 // IF WHAT WE TYPE ISN'T IN THE API ROUTE - WE WANT TO SEND BACK OUR REACT APP:
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/front/index.html'));
+console.log(__dirname)
+app.use('/*', (req, res) => {
+	res.sendFile(__dirname +'/front/index.html')
 });
 // NOTES:
 // http://kerryritter.com/getting-started-with-sequelize-postgres-and-express/

@@ -4,8 +4,8 @@
   "description": "Create an api with the following endpoints:",
   "main": "seed.js",
   "scripts": {
-    "start": "webpack --watch & nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" ",
+    "start": "webpack --watch & nodemon server.js"
   },
   "keywords": [],
   "author": "",
